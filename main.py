@@ -1,9 +1,9 @@
 from fastapi import FastAPI
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routes import router  # Assuming `router` is where your API routes are defined
 
 app = FastAPI()
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -14,3 +14,7 @@ app.add_middleware(
 )
 
 app.include_router(router)
+
+@app.get("/")
+def read_root():
+    return {"message": "Hello, World!"}

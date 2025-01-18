@@ -5,9 +5,16 @@ from pydantic import BaseModel, ValidationError
 from typing import Optional
 import datetime
 import requests
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get MongoDB URI
+MONGO_URI = os.getenv("MONGO_URI")
 
 
-MONGO_URI = "mongodb+srv://shahulshaik2727:SHh3DfJrSoM6VEcV@learning.2g9xfoz.mongodb.net/payment_db"
 client = MongoClient(MONGO_URI)
 db = client["payment_db"]
 payments_collection = db["payments"]
