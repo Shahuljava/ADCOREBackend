@@ -153,7 +153,13 @@ def download_evidence(payment_id: str):
     file_path = payment["evidence_file"]
     if not os.path.exists(file_path):
         raise HTTPException(status_code=404, detail="File not found on the server.")
-    return
+    
+    # Determine the MIME type based on the file extension
+    mime_type, _ = mimetypes.guess_type(file_path)
+    if not mime_type:
+        mime_type = "application/octet-stream"  # Default fallback for unknown types
+
+    return FileResponse(path=file_path, filename=os.path.basename(file_path), media_type=mime_type)
 @router.delete("/payments/{payment_id}")
 def delete_payment(payment_id: str):
     result = payments_collection.delete_one({"_id": ObjectId(payment_id)})
